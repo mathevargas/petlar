@@ -1,3 +1,51 @@
 <resources>
     <string name="app_name">PetLar</string>
+
+    <!-- Tipos de animal -->
+    <string-array name="pet_types">
+        <item>Cachorro</item>
+        <item>Gato</item>
+    </string-array>
+
+    <!-- Portes -->
+    <string-array name="pet_sizes">
+        <item>Pequeno</item>
+        <item>Médio</item>
+        <item>Grande</item>
+    </string-array>
+
+    <!-- Gêneros -->
+    <string-array name="pet_genders">
+        <item>Macho</item>
+        <item>Fêmea</item>
+    </string-array>
+
+    <!-- Tipos de idade -->
+    <string-array name="age_type">
+        <item>Dias</item>
+        <item>Mês</item>
+        <item>Ano</item>
+    </string-array>
+
+    <!-- Valores de idade -->
+    <string-array name="age_values">
+        <item>1</item><item>2</item><item>3</item><item>4</item><item>5</item>
+        <item>6</item><item>7</item><item>8</item><item>9</item><item>10</item>
+        <item>11</item><item>12</item><item>13</item><item>14</item><item>15</item>
+        <item>16</item><item>17</item><item>18</item><item>19</item><item>20</item>
+        <item>21</item><item>22</item><item>23</item><item>24</item><item>25</item>
+        <item>26</item><item>27</item><item>28</item><item>29</item><item>30</item>
+        <item>31</item>
+    </string-array>
+
+    <!-- Estados -->
+    <string-array name="ufs">
+        <item>AC</item><item>AL</item><item>AP</item><item>AM</item>
+        <item>BA</item><item>CE</item><item>DF</item><item>ES</item>
+        <item>GO</item><item>MA</item><item>MT</item><item>MS</item>
+        <item>MG</item><item>PA</item><item>PB</item><item>PR</item>
+        <item>PE</item><item>PI</item><item>RJ</item><item>RN</item>
+        <item>RS</item><item>RO</item><item>RR</item><item>SC</item>
+        <item>SP</item><item>SE</item><item>TO</item>
+    </string-array>
 </resources>
