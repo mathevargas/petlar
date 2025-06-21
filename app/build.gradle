@@ -1,5 +1,6 @@
 plugins {
-    alias(libs.plugins.android.application)
+    id 'com.android.application'
+    id 'com.google.gms.google-services' // Plugin do Firebase
 }
 
 android {
@@ -22,14 +23,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
-
+    // Bibliotecas padrão
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
@@ -37,4 +43,18 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+
+    // Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:32.7.3')
+
+    // Firebase Firestore e Storage
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-storage'
+
+    // Firebase Auth
+    implementation 'com.google.firebase:firebase-auth'
+
+    // Glide para carregamento de imagens
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
 }
