@@ -1,14 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <TextView
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
+    <!-- Arte "Meu Perfil" -->
+    <ImageView
+        android:id="@+id/imgTituloMeuPerfil"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Perfil"
-        android:textSize="22sp"
-        android:textStyle="bold" />
-</FrameLayout>
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/titulo_meu_perfil"
+        android:adjustViewBounds="true"
+        android:contentDescription="Arte Meu Perfil" />
+
+    <!-- Dados do Usuário -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imgFotoPerfil"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_launcher_foreground"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/borda_foto_perfil"
+            android:scaleType="centerCrop"
+            android:contentDescription="Foto do Usuário" />
+
+        <TextView
+            android:id="@+id/txtNomeUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome do Usuário"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txtBioUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Apaixonado por animais e adoção responsável."
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Botão Editar Perfil (irá abrir uma nova tela para editar os dados) -->
+        <Button
+            android:id="@+id/btnEditarPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Editar Perfil"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/botao_secundario"
+            android:textColor="@android:color/white" />
+
+        <!-- Botão para acessar a lista de pets (irá abrir nova tela com TabLayout) -->
+        <Button
+            android:id="@+id/btnVerMeusPets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver Meus Pets"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/botao_primario"
+            android:textColor="@android:color/white" />
+
+        <!-- Botão Sair da Conta (deve ficar por último) -->
+        <Button
+            android:id="@+id/btnSair"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sair da Conta"
+            android:background="@drawable/botao_outline"
+            android:textColor="@color/petlar_green" />
+    </LinearLayout>
+
+</LinearLayout>

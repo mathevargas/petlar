@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:background="@color/petlar_yellow"
     card_view:cardCornerRadius="12dp"
     card_view:cardElevation="4dp">
 
@@ -36,35 +37,40 @@
                 android:layout_height="wrap_content"
                 android:text="Nome"
                 android:textStyle="bold"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@color/text_primary" />
 
             <!-- Idade do pet -->
             <TextView
                 android:id="@+id/txtIdadePet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Idade" />
+                android:text="Idade"
+                android:textColor="@color/text_primary" />
 
             <!-- Tipo de animal -->
             <TextView
                 android:id="@+id/txtTipoPet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tipo" />
+                android:text="Tipo"
+                android:textColor="@color/text_primary" />
 
             <!-- Porte do pet -->
             <TextView
                 android:id="@+id/txtPortePet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Porte" />
+                android:text="Porte"
+                android:textColor="@color/text_primary" />
 
             <!-- Cidade e estado -->
             <TextView
                 android:id="@+id/txtCidadeEstado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cidade - Estado" />
+                android:text="Cidade - Estado"
+                android:textColor="@color/text_primary" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

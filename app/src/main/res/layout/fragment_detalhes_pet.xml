@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Layout de detalhes do pet com ScrollView para garantir rolagem em telas pequenas -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Imagem do pet -->
+        <!-- Agora possui imagem padrão para exibir caso Glide falhe ou a URL esteja vazia -->
+        <ImageView
+            android:id="@+id/imgDetalhePet"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_pet_dog_cat" />
+
+        <!-- Nome do pet -->
+        <TextView
+            android:id="@+id/txtNomeDetalhe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome do Pet"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Idade, Tipo, Porte -->
+        <TextView
+            android:id="@+id/txtInfoBasica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Idade - Tipo - Porte"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Gênero e Raça -->
+        <TextView
+            android:id="@+id/txtGeneroRaca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gênero - Raça"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Localização do pet -->
+        <TextView
+            android:id="@+id/txtLocalizacao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cidade - Estado"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Descrição do pet -->
+        <TextView
+            android:id="@+id/txtDescricao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Descrição do pet..."
+            android:layout_marginBottom="16dp" />
+
+        <!-- Botões de contato (WhatsApp e E-mail) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <!-- Botão WhatsApp -->
+            <Button
+                android:id="@+id/btnWhatsApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WhatsApp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/botao_secundario" />
+
+            <!-- Botão E-mail -->
+            <Button
+                android:id="@+id/btnEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E-mail"
+                android:textColor="@android:color/white"
+                android:background="@drawable/botao_primario" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

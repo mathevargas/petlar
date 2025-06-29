@@ -1,11 +1,16 @@
 package com.example.petlar;
 
-public class Pet {
+import java.io.Serializable;
+
+// Classe modelo que representa um pet e pode ser enviada entre telas
+public class Pet implements Serializable {
+
     private String nome;
     private String idade;
     private String tipo;
     private String porte;
     private String genero;
+    private String raca;
     private String cidade;
     private String estado;
     private String email;
@@ -13,11 +18,12 @@ public class Pet {
     private String descricao;
     private String urlImagem;
 
+    // Construtor vazio necessário para o Firebase
     public Pet() {
-        // Construtor vazio necessário para o Firebase
     }
 
-    public Pet(String nome, String idade, String tipo, String porte, String genero,
+    // Construtor com todos os campos
+    public Pet(String nome, String idade, String tipo, String porte, String genero, String raca,
                String cidade, String estado, String email, String whatsapp,
                String descricao, String urlImagem) {
         this.nome = nome;
@@ -25,6 +31,7 @@ public class Pet {
         this.tipo = tipo;
         this.porte = porte;
         this.genero = genero;
+        this.raca = raca;
         this.cidade = cidade;
         this.estado = estado;
         this.email = email;
@@ -48,6 +55,9 @@ public class Pet {
 
     public String getGenero() { return genero; }
     public void setGenero(String genero) { this.genero = genero; }
+
+    public String getRaca() { return raca; }
+    public void setRaca(String raca) { this.raca = raca; }
 
     public String getCidade() { return cidade; }
     public void setCidade(String cidade) { this.cidade = cidade; }

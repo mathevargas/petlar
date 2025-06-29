@@ -10,11 +10,14 @@
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation" />
 
-    <!-- Barra inferior de navegação -->
+    <!-- Barra inferior de navegação com cores customizadas -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconTint="@color/nav_selector"
+        app:itemTextColor="@color/nav_selector"
+        android:background="@color/background_light" />
 </RelativeLayout>

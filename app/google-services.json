@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "862329967334",
-    "project_id": "petlar-efb70",
-    "storage_bucket": "petlar-efb70.firebasestorage.app"
+    "project_number": "842624649126",
+    "project_id": "petlar-98b79",
+    "storage_bucket": "petlar-98b79.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:862329967334:android:fa854d91a3077f7aa66127",
+        "mobilesdk_app_id": "1:842624649126:android:82032faf2fafa900cab167",
         "android_client_info": {
           "package_name": "com.example.petlar"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD6F3HktZbt071dRuPg2NQUrmp6CD_Ewvw"
+          "current_key": "AIzaSyCnNemsUBli88dhT3ljkxobPyj51d23GYU"
         }
       ],
       "services": {

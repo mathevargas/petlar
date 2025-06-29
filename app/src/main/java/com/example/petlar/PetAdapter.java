@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
@@ -19,14 +20,21 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
 
     private Context context;
     private List<Pet> listaPets;
+    private OnPetClickListener listener;
 
-    // Construtor do adapter
-    public PetAdapter(Context context, List<Pet> listaPets) {
-        this.context = context;
-        this.listaPets = listaPets;
+    // Interface que permite detectar clique em um pet da lista
+    public interface OnPetClickListener {
+        void onPetClick(Pet pet);
     }
 
-    // Cria o layout de cada item da lista
+    // Construtor do adapter
+    public PetAdapter(Context context, List<Pet> listaPets, OnPetClickListener listener) {
+        this.context = context;
+        this.listaPets = listaPets;
+        this.listener = listener;
+    }
+
+    // Cria o layout de cada item da RecyclerView
     @NonNull
     @Override
     public PetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,31 +42,45 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
         return new PetViewHolder(view);
     }
 
-    // Associa os dados ao item da lista
+    // Associa os dados do pet ao layout
     @Override
     public void onBindViewHolder(@NonNull PetViewHolder holder, int position) {
         Pet pet = listaPets.get(position);
 
-        // Define os textos nos campos
+        // Define textos nos campos da interface
         holder.txtNome.setText(pet.getNome());
         holder.txtIdade.setText(pet.getIdade());
         holder.txtTipo.setText(pet.getTipo());
         holder.txtPorte.setText(pet.getPorte());
         holder.txtCidadeEstado.setText(pet.getCidade() + " - " + pet.getEstado());
 
-        // Carrega a imagem do pet com Glide (imagem obrigatória no cadastro)
-        Glide.with(context)
-                .load(pet.getUrlImagem())
-                .into(holder.imgPet);
+        // Carrega imagem do pet (ou imagem padrão, se URL estiver vazia ou nula)
+        String urlImagem = pet.getUrlImagem();
+        if (urlImagem == null || urlImagem.isEmpty()) {
+            holder.imgPet.setImageResource(R.drawable.ic_pet_dog_cat);
+        } else {
+            Glide.with(context)
+                    .load(urlImagem)
+                    .placeholder(R.drawable.ic_pet_dog_cat) // Mostra enquanto carrega
+                    .error(R.drawable.ic_pet_dog_cat)      // Mostra se erro
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.imgPet);
+        }
+
+        // Configura clique no item da lista
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onPetClick(pet);
+            }
+        });
     }
 
-    // Retorna o total de itens
     @Override
     public int getItemCount() {
         return listaPets.size();
     }
 
-    // ViewHolder representa os componentes visuais de cada item
+    // ViewHolder: representa os componentes do layout do item
     public static class PetViewHolder extends RecyclerView.ViewHolder {
 
         TextView txtNome, txtIdade, txtTipo, txtPorte, txtCidadeEstado;
@@ -71,7 +93,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
             txtTipo = itemView.findViewById(R.id.txtTipoPet);
             txtPorte = itemView.findViewById(R.id.txtPortePet);
             txtCidadeEstado = itemView.findViewById(R.id.txtCidadeEstado);
-            imgPet = itemView.findViewById(R.id.imgPet); // Imagem do pet
+            imgPet = itemView.findViewById(R.id.imgPet);
         }
     }
 }

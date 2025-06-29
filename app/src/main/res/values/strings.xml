@@ -48,4 +48,13 @@
         <item>RS</item><item>RO</item><item>RR</item><item>SC</item>
         <item>SP</item><item>SE</item><item>TO</item>
     </string-array>
+
+        <!-- Países -->
+        <string-array name="country_codes">
+            <item>🇧🇷 +55 (Brasil)</item>
+            <item>🇺🇸 +1 (EUA)</item>
+            <item>🇦🇷 +54 (Argentina)</item>
+            <item>🇺🇾 +598 (Uruguai)</item>
+            <item>🇵🇾 +595 (Paraguai)</item>
+        </string-array>
 </resources>

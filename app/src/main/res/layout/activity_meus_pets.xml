@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <!-- Navbar com dois botões para alternar entre pets disponíveis e adotados -->
+    <LinearLayout
+        android:id="@+id/navbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="8dp">
+
+        <!-- Botão de filtro para pets disponíveis -->
+        <Button
+            android:id="@+id/btnDisponiveis"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Disponíveis"
+            android:background="@drawable/botao_primario"
+            android:textColor="@android:color/white" />
+
+        <!-- Botão de filtro para pets já adotados -->
+        <Button
+            android:id="@+id/btnAdotados"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Adotados"
+            android:background="@drawable/botao_outline"
+            android:textColor="@color/petlar_green" />
+    </LinearLayout>
+
+    <!-- Container onde os fragments (Disponíveis ou Adotados) serão carregados -->
+    <FrameLayout
+        android:id="@+id/meusPetsFragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Imagem personalizada do título de login -->
+        <ImageView
+            android:id="@+id/imgTituloLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/titulo_login_petlar"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:contentDescription="Título visual do login" />
+
+        <!-- Campo Nome (só no modo cadastro) -->
+        <EditText
+            android:id="@+id/etNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome completo"
+            android:inputType="textPersonName"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp" />
+
+        <!-- E-mail -->
+        <EditText
+            android:id="@+id/etEmailLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Senha -->
+        <EditText
+            android:id="@+id/etSenhaLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Senha"
+            android:inputType="textPassword"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Confirmar Senha (só no modo cadastro) -->
+        <EditText
+            android:id="@+id/etConfirmarSenha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirmar senha"
+            android:inputType="textPassword"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Botão Entrar / Criar conta -->
+        <Button
+            android:id="@+id/btnAcao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Entrar"
+            android:textColor="@android:color/white"
+            android:background="@drawable/botao_primario"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Link para alternar -->
+        <TextView
+            android:id="@+id/txtAlternarModo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Não tem uma conta? Cadastre-se"
+            android:textColor="@color/petlar_blue"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Link para recuperar senha (só modo login) -->
+        <TextView
+            android:id="@+id/txtRecuperarSenha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Esqueceu a senha?"
+            android:textColor="@color/petlar_blue"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+</ScrollView>

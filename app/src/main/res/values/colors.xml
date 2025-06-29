@@ -1,5 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- 🎨 Cores oficiais baseadas nas artes do PetLar -->
+    <color name="petlar_orange">#FFA540</color>   <!-- Laranja alegre das ilustrações -->
+    <color name="petlar_blue">#47C2D7</color>     <!-- Azul do nome PetLar -->
+    <color name="petlar_green">#3A725D</color>    <!-- Verde suave (detalhes) -->
+    <color name="petlar_yellow">#FFD857</color>   <!-- Amarelo pastel (destaque) -->
+    <color name="petlar_brown">#AF5A00</color>    <!-- Marrom dos traços dos pets -->
+
+    <!-- ⚙️ Cores para UI e texto -->
+    <color name="text_primary">#212121</color>         <!-- Preto suave para texto principal -->
+    <color name="text_secondary">#757575</color>       <!-- Cinza para textos menos importantes -->
+    <color name="background_light">#FFFFFF</color>     <!-- Fundo padrão branco -->
+    <color name="background_soft">#FFF8E1</color>      <!-- Fundo suave amarelinho -->
+
+    <!-- 🟠 Cores para botões e ações -->
+    <color name="button_primary">#47C2D7</color>       <!-- Azul claro: botões principais -->
+    <color name="button_secondary">#FFA354</color>     <!-- Laranja: botões de apoio -->
+    <color name="button_outline">#5C8C6F</color>       <!-- Verde esmaecido: botões neutros -->
+    <color name="button_pressed">#3FBCCC</color>       <!-- Azul mais escuro: efeito de clique -->
+
+    <!-- 🔘 Cores para ícones e navegação -->
+    <color name="nav_active">#FFD399</color>           <!-- Laranja suave (nav selecionada) -->
+    <color name="nav_inactive">#BDBDBD</color>         <!-- Cinza claro (nav inativa) -->
+
+    <!-- ⚠️ Legadas (se usadas ainda em componentes antigos) -->
+    <color name="purple_500">#9C27B0</color>
+    <color name="purple_700">#7B1FA2</color>
+    <color name="blue_500">#4A90E2</color>
+    <color name="gray_100">#F5F5F5</color>
+    <color name="gray_600">#757575</color>
+    <color name="green_500">#4CAF50</color>
+    <color name="orange_500">#FF9800</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>
