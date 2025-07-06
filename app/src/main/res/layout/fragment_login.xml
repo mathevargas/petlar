@@ -11,18 +11,18 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <!-- Imagem personalizada do título de login -->
+        <!-- Imagem de título (logo ou nome do app) -->
         <ImageView
             android:id="@+id/imgTituloLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="32dp"
             android:src="@drawable/titulo_login_petlar"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:contentDescription="Título visual do login" />
+            android:contentDescription="Título do PetLar" />
 
-        <!-- Campo Nome (só no modo cadastro) -->
+        <!-- Campo Nome (modo cadastro) -->
         <EditText
             android:id="@+id/etNome"
             android:layout_width="match_parent"
@@ -50,7 +50,7 @@
             android:inputType="textPassword"
             android:layout_marginBottom="12dp" />
 
-        <!-- Confirmar Senha (só no modo cadastro) -->
+        <!-- Confirmar Senha (modo cadastro) -->
         <EditText
             android:id="@+id/etConfirmarSenha"
             android:layout_width="match_parent"
@@ -60,7 +60,7 @@
             android:visibility="gone"
             android:layout_marginBottom="12dp" />
 
-        <!-- Botão Entrar / Criar conta -->
+        <!-- Botão de ação -->
         <Button
             android:id="@+id/btnAcao"
             android:layout_width="match_parent"
@@ -68,9 +68,10 @@
             android:text="Entrar"
             android:textColor="@android:color/white"
             android:background="@drawable/botao_primario"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="20dp" />
 
-        <!-- Link para alternar -->
+        <!-- Link para cadastrar -->
         <TextView
             android:id="@+id/txtAlternarModo"
             android:layout_width="wrap_content"
@@ -78,9 +79,9 @@
             android:text="Não tem uma conta? Cadastre-se"
             android:textColor="@color/petlar_blue"
             android:textSize="14sp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="8dp" />
 
-        <!-- Link para recuperar senha (só modo login) -->
+        <!-- Link para recuperar senha -->
         <TextView
             android:id="@+id/txtRecuperarSenha"
             android:layout_width="wrap_content"
@@ -88,6 +89,6 @@
             android:text="Esqueceu a senha?"
             android:textColor="@color/petlar_blue"
             android:textSize="14sp"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="4dp" />
     </LinearLayout>
 </ScrollView>

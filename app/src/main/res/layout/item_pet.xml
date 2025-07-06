@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <!-- Imagem do pet (carregada via Glide no adapter) -->
+        <!-- Imagem do pet -->
         <ImageView
             android:id="@+id/imgPet"
             android:layout_width="100dp"
@@ -23,6 +23,7 @@
             android:scaleType="centerCrop"
             android:contentDescription="Imagem do Pet" />
 
+        <!-- Coluna com os dados e botões -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -30,7 +31,7 @@
             android:orientation="vertical"
             android:gravity="center_vertical">
 
-            <!-- Nome do pet -->
+            <!-- Nome -->
             <TextView
                 android:id="@+id/txtNomePet"
                 android:layout_width="wrap_content"
@@ -40,7 +41,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/text_primary" />
 
-            <!-- Idade do pet -->
+            <!-- Idade -->
             <TextView
                 android:id="@+id/txtIdadePet"
                 android:layout_width="wrap_content"
@@ -48,7 +49,7 @@
                 android:text="Idade"
                 android:textColor="@color/text_primary" />
 
-            <!-- Tipo de animal -->
+            <!-- Tipo -->
             <TextView
                 android:id="@+id/txtTipoPet"
                 android:layout_width="wrap_content"
@@ -56,7 +57,7 @@
                 android:text="Tipo"
                 android:textColor="@color/text_primary" />
 
-            <!-- Porte do pet -->
+            <!-- Porte -->
             <TextView
                 android:id="@+id/txtPortePet"
                 android:layout_width="wrap_content"
@@ -64,13 +65,54 @@
                 android:text="Porte"
                 android:textColor="@color/text_primary" />
 
-            <!-- Cidade e estado -->
+            <!-- Cidade - Estado -->
             <TextView
                 android:id="@+id/txtCidadeEstado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cidade - Estado"
                 android:textColor="@color/text_primary" />
+
+            <!-- Botões visíveis apenas para o dono do pet -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="end">
+
+                <!-- Marcar como adotado -->
+                <Button
+                    android:id="@+id/btnMarcarAdotado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Adotado"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/petlar_green"
+                    android:textColor="@android:color/white"
+                    android:visibility="gone" />
+
+                <!-- Editar pet -->
+                <Button
+                    android:id="@+id/btnEditarPet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Editar"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="@color/petlar_blue"
+                    android:textColor="@android:color/white"
+                    android:visibility="gone" />
+
+                <!-- Excluir pet -->
+                <Button
+                    android:id="@+id/btnExcluirPet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Excluir"
+                    android:backgroundTint="@color/orange_500"
+                    android:textColor="@android:color/white"
+                    android:visibility="gone" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

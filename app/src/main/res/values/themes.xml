@@ -1,9 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- Base Theme com Material 3 e cores personalizadas -->
     <style name="Base.Theme.PetLar" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <!-- 🎨 Cores principais do PetLar -->
+        <item name="colorPrimary">@color/button_primary</item>
+        <item name="colorPrimaryContainer">@color/button_primary_pressed</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <item name="colorSecondary">@color/button_secondary</item>
+        <item name="colorSecondaryContainer">@color/button_secondary_pressed</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+
+        <!-- 🎨 Cores de fundo e superfície -->
+        <item name="android:colorBackground">@color/background_light</item> <!-- ✅ corrigido -->
+        <item name="colorSurface">@color/background_light</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+
+        <!-- 🌙 Barra de status e navegação -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/button_primary</item>
+        <item name="android:navigationBarColor">@color/nav_active</item>
     </style>
 
+    <!-- Tema usado no AndroidManifest -->
     <style name="Theme.PetLar" parent="Base.Theme.PetLar" />
+
 </resources>

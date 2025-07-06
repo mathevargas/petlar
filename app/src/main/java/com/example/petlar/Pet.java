@@ -5,6 +5,7 @@ import java.io.Serializable;
 // Classe modelo que representa um pet e pode ser enviada entre telas
 public class Pet implements Serializable {
 
+    private String idPet;
     private String nome;
     private String idade;
     private String tipo;
@@ -17,15 +18,17 @@ public class Pet implements Serializable {
     private String whatsapp;
     private String descricao;
     private String urlImagem;
+    private String uidUsuario;
+    private boolean adotado;
 
     // Construtor vazio necessário para o Firebase
     public Pet() {
     }
 
-    // Construtor com todos os campos
+    // Construtor com todos os campos (exceto id)
     public Pet(String nome, String idade, String tipo, String porte, String genero, String raca,
                String cidade, String estado, String email, String whatsapp,
-               String descricao, String urlImagem) {
+               String descricao, String urlImagem, String uidUsuario, boolean adotado) {
         this.nome = nome;
         this.idade = idade;
         this.tipo = tipo;
@@ -38,9 +41,14 @@ public class Pet implements Serializable {
         this.whatsapp = whatsapp;
         this.descricao = descricao;
         this.urlImagem = urlImagem;
+        this.uidUsuario = uidUsuario;
+        this.adotado = adotado;
     }
 
     // Getters e Setters
+    public String getIdPet() { return idPet; }
+    public void setIdPet(String idPet) { this.idPet = idPet; }
+
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 
@@ -76,4 +84,10 @@ public class Pet implements Serializable {
 
     public String getUrlImagem() { return urlImagem; }
     public void setUrlImagem(String urlImagem) { this.urlImagem = urlImagem; }
+
+    public String getUidUsuario() { return uidUsuario; }
+    public void setUidUsuario(String uidUsuario) { this.uidUsuario = uidUsuario; }
+
+    public boolean isAdotado() { return adotado; }
+    public void setAdotado(boolean adotado) { this.adotado = adotado; }
 }

@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+// Fragmento responsável por cadastrar um novo pet no sistema
 public class CadastrarPetFragment extends Fragment {
 
     private EditText etNome, etRaca, etCidade, etWhatsApp, etEmail, etDescricao;
@@ -132,8 +133,10 @@ public class CadastrarPetFragment extends Fragment {
         String idUsuario = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : "";
 
         if (imagemSelecionadaUri == null) {
+            // Salva pet com imagem padrão
             salvarPetComImagem("https://firebasestorage.googleapis.com/v0/b/SEU_PROJETO.appspot.com/o/ic_pet_dog_cat.png?alt=media", nome, idade, genero, raca, cidade, estado, whatsapp, email, descricao, tipo, porte, idUsuario);
         } else {
+            // Faz upload da imagem e obtém URL
             String nomeImagem = UUID.randomUUID().toString();
             StorageReference imagemRef = storageReference.child("pets/" + nomeImagem);
 
@@ -148,11 +151,16 @@ public class CadastrarPetFragment extends Fragment {
         }
     }
 
+    // Método para salvar os dados do pet no Firestore (com URL da imagem já definida)
     private void salvarPetComImagem(String imagemUrl, String nome, String idade, String genero,
                                     String raca, String cidade, String estado, String whatsapp, String email,
                                     String descricao, String tipo, String porte, String idUsuario) {
 
+        // Cria referência com ID gerado automaticamente
+        String idPet = firestore.collection("pets").document().getId(); // ← novo ID gerado para o campo "idPet"
+
         Map<String, Object> pet = new HashMap<>();
+        pet.put("idPet", idPet); // ← campo adicional usado para consistência em outras partes do app
         pet.put("nome", nome);
         pet.put("idade", idade);
         pet.put("genero", genero);
@@ -164,11 +172,12 @@ public class CadastrarPetFragment extends Fragment {
         pet.put("descricao", descricao);
         pet.put("tipo", tipo);
         pet.put("porte", porte);
-        pet.put("imagemUrl", imagemUrl);
+        pet.put("urlImagem", imagemUrl); // ← campo renomeado para corresponder à classe Pet
         pet.put("adotado", false);
-        pet.put("idUsuario", idUsuario);
+        pet.put("uidUsuario", idUsuario); // ← renomeado para uidUsuario conforme estrutura do banco
+        pet.put("criadoEm", com.google.firebase.Timestamp.now()); // ← campo extra (timestamp)
 
-        firestore.collection("pets").add(pet)
+        firestore.collection("pets").document(idPet).set(pet)
                 .addOnSuccessListener(documentReference -> {
                     Toast.makeText(getContext(), "Pet cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
                     limparCampos();

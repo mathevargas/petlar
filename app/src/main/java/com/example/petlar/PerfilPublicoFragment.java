@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class PerfilPublicoFragment extends Fragment {
@@ -54,7 +53,7 @@ public class PerfilPublicoFragment extends Fragment {
         }
 
         btnVerPetsDisponiveis.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), MeusPetsActivity.class);
+            Intent intent = new Intent(getActivity(), MeusPetsFragment.class);
             intent.putExtra("idPublicador", publicadorId);
             intent.putExtra("modoPublico", true);
             startActivity(intent);

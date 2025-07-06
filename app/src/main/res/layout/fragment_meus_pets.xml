@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <!-- TÍTULO DA PÁGINA -->
+    <TextView
+        android:id="@+id/tituloMeusPets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🐾 Meus Pets"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/petlar_primary"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp" />
+
+    <!-- BottomNavigationView no topo, abaixo do título -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_meus_pets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/menu_meus_pets"
+        app:itemIconTint="@color/selector_nav"
+        app:itemTextColor="@color/selector_nav" />
+
+    <!-- Container dos fragmentos -->
+    <FrameLayout
+        android:id="@+id/meusPetsFragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp" />
+</LinearLayout>

@@ -26,6 +26,9 @@ public class MeusPetsAdotadosFragment extends Fragment {
     private List<Pet> listaPets;
     private FirebaseFirestore firestore;
 
+    private boolean modoPublico = false; // Define se é perfil público ou privado
+    private String uidUsuario = ""; // UID do usuário cujos pets serão carregados
+
     public MeusPetsAdotadosFragment() {
         // Construtor público vazio obrigatório
     }
@@ -36,45 +39,57 @@ public class MeusPetsAdotadosFragment extends Fragment {
         // Infla o layout XML correspondente a este fragmento
         View view = inflater.inflate(R.layout.fragment_meus_pets_adotados, container, false);
 
-        // Referência para a RecyclerView com o ID correto conforme seu XML
         recyclerView = view.findViewById(R.id.recyclerPetsAdotados);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
-        // Lista de pets e inicialização do adapter
         listaPets = new ArrayList<>();
-        petAdapter = new PetAdapter(getContext(), listaPets, pet -> {
-            Toast.makeText(getContext(), "Este pet já foi adotado!", Toast.LENGTH_SHORT).show();
-        });
 
+        // Adapter configurado apenas para exibir os pets (sem botões de controle)
+        petAdapter = new PetAdapter(getContext(), listaPets, pet ->
+                Toast.makeText(getContext(), "Este pet já foi adotado!", Toast.LENGTH_SHORT).show()
+        );
         recyclerView.setAdapter(petAdapter);
 
-        // Inicializa Firestore
         firestore = FirebaseFirestore.getInstance();
 
-        // Busca pets adotados do usuário logado
-        carregarPetsAdotados();
+        // Recupera argumentos do bundle para saber se é modo público e o UID do usuário
+        if (getArguments() != null) {
+            modoPublico = getArguments().getBoolean("modoPublico", false);
+            uidUsuario = getArguments().getString("uidUsuario", "");
+        }
+
+        // Em modo público, não deve carregar pets adotados (apenas disponíveis)
+        if (!modoPublico) {
+            // Se privado, usa o usuário logado (caso não tenha vindo no argumento)
+            if (uidUsuario == null || uidUsuario.isEmpty()) {
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    uidUsuario = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                }
+            }
+
+            // Carrega pets adotados do usuário logado
+            carregarPetsAdotados();
+        }
 
         return view;
     }
 
-    // Recupera pets com "adotado = true" e que pertencem ao usuário logado
+    // Carrega os pets marcados como adotados pelo usuário logado
     private void carregarPetsAdotados() {
-        String idUsuario = FirebaseAuth.getInstance().getCurrentUser() != null ?
-                FirebaseAuth.getInstance().getCurrentUser().getUid() : "";
-
         CollectionReference petsRef = firestore.collection("pets");
 
         petsRef.whereEqualTo("adotado", true)
-                .whereEqualTo("idUsuario", idUsuario)
+                .whereEqualTo("uidUsuario", uidUsuario) // ← campo correto no banco
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     listaPets.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         Pet pet = doc.toObject(Pet.class);
+                        pet.setIdPet(doc.getId()); // ← adiciona o ID real do documento no objeto
                         listaPets.add(pet);
                     }
-                    petAdapter.notifyDataSetChanged();
+                    petAdapter.notifyDataSetChanged(); // ← atualiza a RecyclerView após carregar os dados
                 })
                 .addOnFailureListener(e ->
                         Toast.makeText(getContext(), "Erro ao carregar pets adotados", Toast.LENGTH_SHORT).show());

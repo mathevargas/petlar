@@ -1,5 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PetLar</string>
+
+    <!-- Conteúdo de descrição de imagem -->
+    <string name="foto_de_perfil">Foto de perfil</string>
 
     <!-- Tipos de animal -->
     <string-array name="pet_types">
@@ -49,12 +53,12 @@
         <item>SP</item><item>SE</item><item>TO</item>
     </string-array>
 
-        <!-- Países -->
-        <string-array name="country_codes">
-            <item>🇧🇷 +55 (Brasil)</item>
-            <item>🇺🇸 +1 (EUA)</item>
-            <item>🇦🇷 +54 (Argentina)</item>
-            <item>🇺🇾 +598 (Uruguai)</item>
-            <item>🇵🇾 +595 (Paraguai)</item>
-        </string-array>
+    <!-- Países -->
+    <string-array name="country_codes">
+        <item>🇧🇷 +55 (Brasil)</item>
+        <item>🇺🇸 +1 (EUA)</item>
+        <item>🇦🇷 +54 (Argentina)</item>
+        <item>🇺🇾 +598 (Uruguai)</item>
+        <item>🇵🇾 +595 (Paraguai)</item>
+    </string-array>
 </resources>

@@ -2,13 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Permissão para acessar a internet (obrigatória para Firebase) -->
+    <!-- Permissões necessárias -->
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- Permissão para acessar imagens da galeria no Android 13+ -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-
-    <!-- Permissão para acessar imagens no Android 12 ou inferior -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -22,18 +18,21 @@
         android:theme="@style/Theme.PetLar"
         tools:targetApi="31">
 
-        <!-- Atividade principal do aplicativo -->
+        <!-- Tela principal com BottomNavigationView -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
-            <!-- Define essa activity como a principal ao iniciar o app -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+
+        <!-- Tela para editar PET (ainda é uma Activity) -->
+        <activity android:name=".EditarPetFragment" />
+
+        <!-- Tela para visualizar os próprios pets com abas -->
+        <activity android:name=".MeusPetsFragment" />
     </application>
 
 </manifest>

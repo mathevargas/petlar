@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="@color/background_light">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Arte do topo (igual à tela de perfil), alinhada à direita -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp">
+
+            <ImageView
+                android:id="@+id/imgArteTopo"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/titulo_meu_perfil"
+                android:adjustViewBounds="true"
+                android:contentDescription="Arte visual do perfil" />
+        </RelativeLayout>
+
+        <!-- Foto de perfil -->
+        <ImageView
+            android:id="@+id/imgFotoPerfilEditar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="12dp"
+            android:src="@drawable/img_perfil_default"
+            android:scaleType="centerCrop"
+            android:background="@drawable/borda_foto_perfil"
+            android:contentDescription="@string/foto_de_perfil" />
+
+        <!-- Botão de selecionar nova imagem -->
+        <Button
+            android:id="@+id/btnSelecionarFotoEditar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selecionar Foto"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/botao_secundario"
+            android:textColor="@android:color/white" />
+
+        <!-- E-mail (somente leitura) -->
+        <EditText
+            android:id="@+id/edtEmailUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-mail"
+            android:enabled="false"
+            android:focusable="false"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Nome -->
+        <EditText
+            android:id="@+id/edtNomeUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Bio -->
+        <EditText
+            android:id="@+id/edtBioUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Bio"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:maxLines="5"
+            android:gravity="top"
+            android:layout_marginBottom="12dp" />
+
+        <!-- WhatsApp com código do país (spinner + número) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <Spinner
+                android:id="@+id/spinnerCountryCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:spinnerMode="dropdown" />
+
+            <EditText
+                android:id="@+id/etWhatsApp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="WhatsApp"
+                android:inputType="phone" />
+        </LinearLayout>
+
+        <!-- Cidade -->
+        <EditText
+            android:id="@+id/edtCidadeUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cidade"
+            android:inputType="textCapWords"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Estado (Spinner) -->
+        <Spinner
+            android:id="@+id/spinnerEstadoEditar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Nova senha (opcional) -->
+        <EditText
+            android:id="@+id/edtNovaSenha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nova senha (opcional)"
+            android:inputType="textPassword"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Botão salvar -->
+        <Button
+            android:id="@+id/btnSalvarPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Salvar alterações"
+            android:background="@drawable/botao_primario"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</ScrollView>

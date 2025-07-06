@@ -16,12 +16,13 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 // Fragmento responsável por exibir os detalhes do pet selecionado
 public class DetalhesPetFragment extends Fragment {
 
     private ImageView imgPet;
-    private TextView txtNome, txtInfoBasica, txtGeneroRaca, txtLocalizacao, txtDescricao;
+    private TextView txtNome, txtInfoBasica, txtGeneroRaca, txtLocalizacao, txtDescricao, txtPublicador;
     private Button btnWhatsApp, btnEmail;
 
     private Pet petSelecionado;
@@ -48,6 +49,7 @@ public class DetalhesPetFragment extends Fragment {
         txtGeneroRaca = view.findViewById(R.id.txtGeneroRaca);
         txtLocalizacao = view.findViewById(R.id.txtLocalizacao);
         txtDescricao = view.findViewById(R.id.txtDescricao);
+        txtPublicador = view.findViewById(R.id.txtPublicador);
         btnWhatsApp = view.findViewById(R.id.btnWhatsApp);
         btnEmail = view.findViewById(R.id.btnEmail);
 
@@ -111,10 +113,37 @@ public class DetalhesPetFragment extends Fragment {
                 startActivity(Intent.createChooser(emailIntent, "Enviar e-mail"));
             });
 
+            // Mostra nome do publicador
+            carregarNomePublicador(pet.getUidUsuario()); // ← Corrigido: uidUsuario é o campo correto
+
         } else {
             // Esconde os botões de contato se o usuário não estiver logado
             btnWhatsApp.setVisibility(View.GONE);
             btnEmail.setVisibility(View.GONE);
+            txtPublicador.setVisibility(View.GONE);
         }
+    }
+
+    // Busca o nome do usuário publicador no Firestore e exibe
+    private void carregarNomePublicador(String uidUsuario) {
+        FirebaseFirestore.getInstance().collection("usuarios")
+                .document(uidUsuario)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String nome = documentSnapshot.getString("nome");
+                        txtPublicador.setText("Publicado por: " + nome);
+                        txtPublicador.setVisibility(View.VISIBLE);
+
+                        // Ao clicar no nome do publicador, abre o perfil público dele
+                        txtPublicador.setOnClickListener(v -> {
+                            Intent intent = new Intent(getContext(), MeusPetsFragment.class);
+                            intent.putExtra("uidUsuario", uidUsuario);
+                            intent.putExtra("modoPublico", true);
+                            startActivity(intent);
+                        });
+                    }
+                })
+                .addOnFailureListener(e -> txtPublicador.setVisibility(View.GONE));
     }
 }

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@drawable/fundo_painel"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Título do painel de filtro -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Filtrar pets"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/petlar_blue"
+        android:gravity="center"
+        android:paddingBottom="16dp" />
+
+    <!-- Filtro por Estado -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Estado"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
+
+    <Spinner
+        android:id="@+id/spinnerEstado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Filtro por Cidade -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cidade"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
+
+    <EditText
+        android:id="@+id/editCidade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Digite a cidade"
+        android:inputType="textCapWords"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Filtro por Tipo -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tipo"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
+
+    <Spinner
+        android:id="@+id/spinnerTipo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Filtro por Porte -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Porte"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
+
+    <Spinner
+        android:id="@+id/spinnerPorte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Filtro por Raça -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Raça"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
+
+    <EditText
+        android:id="@+id/editRaca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Digite a raça"
+        android:inputType="textCapWords"
+        android:layout_marginBottom="12dp" />
+
+</LinearLayout>

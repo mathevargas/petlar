@@ -1,6 +1,8 @@
 package com.example.petlar;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,9 +41,13 @@ public class LoginFragment extends Fragment {
 
         auth = FirebaseAuth.getInstance();
 
+        // Ação do botão de login
         btnAcao.setOnClickListener(v -> realizarLogin());
-        txtRecuperarSenha.setOnClickListener(v -> recuperarSenha());
 
+        // Ação do link "Esqueci minha senha"
+        txtRecuperarSenha.setOnClickListener(v -> mostrarDialogRecuperarSenha());
+
+        // Alternar para tela de cadastro
         txtAlternarModo.setOnClickListener(v -> {
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new RegistroFragment())
@@ -65,7 +71,7 @@ public class LoginFragment extends Fragment {
                 .addOnSuccessListener(authResult -> {
                     Toast.makeText(getContext(), "Login realizado com sucesso", Toast.LENGTH_SHORT).show();
 
-                    // ✅ Redireciona para a tela inicial (InicioFragment)
+                    // Redireciona para a tela inicial
                     requireActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragment_container, new InicioFragment())
@@ -76,20 +82,37 @@ public class LoginFragment extends Fragment {
                 });
     }
 
-    private void recuperarSenha() {
-        String email = etEmailLogin.getText().toString().trim();
+    /**
+     * Exibe um AlertDialog solicitando o e-mail para recuperar senha.
+     */
+    private void mostrarDialogRecuperarSenha() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Recuperar Senha");
 
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(getContext(), "Informe seu e-mail para recuperar a senha", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        final EditText input = new EditText(getContext());
+        input.setHint("Digite seu e-mail");
+        input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        builder.setView(input);
 
-        auth.sendPasswordResetEmail(email)
-                .addOnSuccessListener(unused -> {
-                    Toast.makeText(getContext(), "E-mail de recuperação enviado", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(getContext(), "Erro: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+        builder.setPositiveButton("Enviar", (dialog, which) -> {
+            String email = input.getText().toString().trim();
+
+            if (TextUtils.isEmpty(email)) {
+                Toast.makeText(getContext(), "Digite um e-mail válido", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            auth.sendPasswordResetEmail(email)
+                    .addOnSuccessListener(unused -> {
+                        Toast.makeText(getContext(), "E-mail de recuperação enviado", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(getContext(), "Erro: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        });
+
+        builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+
+        builder.show();
     }
 }

@@ -11,13 +11,23 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <!-- Logo ou imagem do app -->
+        <!-- Imagem de Perfil (genérica por padrão) -->
         <ImageView
-            android:id="@+id/imgLogoRegistro"
+            android:id="@+id/imgFotoPerfilRegistro"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@drawable/ic_launcher_foreground"
-            android:contentDescription="Logo do PetLar"
+            android:src="@drawable/img_perfil_default"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/borda_foto_perfil"
+            android:scaleType="centerCrop"
+            android:contentDescription="Foto de Perfil" />
+
+        <!-- Botão para escolher imagem (opcional) -->
+        <Button
+            android:id="@+id/btnSelecionarFoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selecionar Foto de Perfil"
             android:layout_marginBottom="16dp" />
 
         <!-- Título -->
@@ -66,6 +76,72 @@
             android:inputType="textPassword"
             android:layout_marginBottom="12dp" />
 
+        <!-- WhatsApp (Spinner do DDD + número) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <!-- Spinner para código do país -->
+            <Spinner
+                android:id="@+id/spinnerCountryCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/country_codes" />
+
+            <!-- Número do WhatsApp -->
+            <EditText
+                android:id="@+id/etNumero"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Número WhatsApp"
+                android:inputType="phone"
+                android:layout_marginStart="8dp"
+                android:maxLength="15" />
+        </LinearLayout>
+
+        <!-- Cidade -->
+        <EditText
+            android:id="@+id/etCidade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cidade"
+            android:inputType="textCapWords"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Estado (Spinner) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estado:"
+                android:layout_marginEnd="8dp"
+                android:layout_gravity="center_vertical" />
+
+            <Spinner
+                android:id="@+id/spinnerEstado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Bio -->
+        <EditText
+            android:id="@+id/etBio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Escreva uma breve bio"
+            android:inputType="textCapSentences"
+            android:maxLines="3"
+            android:minLines="2"
+            android:layout_marginBottom="16dp" />
+
         <!-- Botão Criar Conta -->
         <Button
             android:id="@+id/btnAcao"
@@ -74,6 +150,7 @@
             android:text="Criar conta"
             android:textColor="@android:color/white"
             android:background="@drawable/botao_primario"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="8dp" />
+
     </LinearLayout>
 </ScrollView>
