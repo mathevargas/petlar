@@ -22,18 +22,19 @@
         android:padding="16dp"
         android:background="@android:color/transparent">
 
-        <!-- Título -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Pets disponíveis para adoção"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:paddingBottom="8dp"
-            android:textColor="@android:color/black" />
+        <!-- Arte centralizada no topo substituindo o título -->
 
         <!-- Botão de filtro (abre BottomSheet) -->
+        <ImageView
+            android:id="@+id/imgTituloTelaInicio"
+            android:layout_width="200dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            android:contentDescription="Título da tela inicial"
+            android:src="@drawable/titulo_tela_inicio" />
+
         <Button
             android:id="@+id/btnAbrirFiltro"
             android:layout_width="wrap_content"

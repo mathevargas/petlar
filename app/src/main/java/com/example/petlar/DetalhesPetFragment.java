@@ -67,42 +67,36 @@ public class DetalhesPetFragment extends Fragment {
 
     // Exibe as informações do pet na tela
     private void exibirDadosPet(Pet pet) {
-        // Preenche os campos de texto com as informações do pet
         txtNome.setText(pet.getNome());
         txtInfoBasica.setText(pet.getIdade() + " - " + pet.getTipo() + " - " + pet.getPorte());
         txtGeneroRaca.setText(pet.getGenero() + " - " + (!TextUtils.isEmpty(pet.getRaca()) ? pet.getRaca() : "Sem raça definida"));
         txtLocalizacao.setText(pet.getCidade() + " - " + pet.getEstado());
         txtDescricao.setText(TextUtils.isEmpty(pet.getDescricao()) ? "Sem descrição disponível." : pet.getDescricao());
 
-        // Carrega a imagem do pet com Glide, usando imagem padrão se a URL estiver vazia ou nula
         String url = pet.getUrlImagem();
         if (TextUtils.isEmpty(url)) url = URL_IMAGEM_PADRAO;
 
         Glide.with(this)
                 .load(url)
-                .placeholder(R.drawable.ic_pet_dog_cat) // Mostra imagem local enquanto carrega
-                .error(R.drawable.ic_pet_dog_cat)       // Mostra imagem padrão se houver erro
-                .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache de imagens para melhor desempenho
+                .placeholder(R.drawable.ic_pet_dog_cat)
+                .error(R.drawable.ic_pet_dog_cat)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imgPet);
 
-        // Verifica se o usuário está logado
         boolean estaLogado = FirebaseAuth.getInstance().getCurrentUser() != null;
 
         if (estaLogado) {
-            // Mostra os botões de contato
             btnWhatsApp.setVisibility(View.VISIBLE);
             btnEmail.setVisibility(View.VISIBLE);
 
-            // Ação do botão WhatsApp com mensagem personalizada
             btnWhatsApp.setOnClickListener(v -> {
-                String numero = pet.getWhatsapp().replaceAll("\\D", ""); // Remove tudo que não for número
+                String numero = pet.getWhatsapp().replaceAll("\\D", "");
                 String mensagem = "Olá! Vi o pet " + pet.getNome() + " no app PetLar e gostaria de saber mais.";
                 String uri = "https://wa.me/" + numero + "?text=" + Uri.encode(mensagem);
 
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uri)));
             });
 
-            // Ação do botão E-mail com assunto e corpo pré-preenchidos
             btnEmail.setOnClickListener(v -> {
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
                 emailIntent.setData(Uri.parse("mailto:" + pet.getEmail()));
@@ -113,11 +107,9 @@ public class DetalhesPetFragment extends Fragment {
                 startActivity(Intent.createChooser(emailIntent, "Enviar e-mail"));
             });
 
-            // Mostra nome do publicador
-            carregarNomePublicador(pet.getUidUsuario()); // ← Corrigido: uidUsuario é o campo correto
+            carregarNomePublicador(pet.getUidUsuario());
 
         } else {
-            // Esconde os botões de contato se o usuário não estiver logado
             btnWhatsApp.setVisibility(View.GONE);
             btnEmail.setVisibility(View.GONE);
             txtPublicador.setVisibility(View.GONE);
@@ -132,16 +124,26 @@ public class DetalhesPetFragment extends Fragment {
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         String nome = documentSnapshot.getString("nome");
+
                         txtPublicador.setText("Publicado por: " + nome);
                         txtPublicador.setVisibility(View.VISIBLE);
 
-                        // Ao clicar no nome do publicador, abre o perfil público dele
                         txtPublicador.setOnClickListener(v -> {
-                            Intent intent = new Intent(getContext(), MeusPetsFragment.class);
-                            intent.putExtra("uidUsuario", uidUsuario);
-                            intent.putExtra("modoPublico", true);
-                            startActivity(intent);
+                            PerfilPublicoFragment perfilPublicoFragment = new PerfilPublicoFragment();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("uidUsuario", uidUsuario);
+                            perfilPublicoFragment.setArguments(bundle);
+
+                            if (getActivity() != null) {
+                                getActivity().getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.fragment_container, perfilPublicoFragment)
+                                        .addToBackStack(null)
+                                        .commit();
+                            }
                         });
+                    } else {
+                        txtPublicador.setVisibility(View.GONE);
                     }
                 })
                 .addOnFailureListener(e -> txtPublicador.setVisibility(View.GONE));

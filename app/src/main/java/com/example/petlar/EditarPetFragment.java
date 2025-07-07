@@ -137,12 +137,17 @@ public class EditarPetFragment extends Fragment {
         setSpinnerByValue(spinnerGender, petAtual.getGenero());
         setSpinnerByValue(spinnerState, petAtual.getEstado());
 
-        // Divide idade
+        // Divide idade para preencher os dois spinners
         if (petAtual.getIdade() != null && petAtual.getIdade().contains(" ")) {
             String[] partes = petAtual.getIdade().split(" ");
             if (partes.length == 2) {
                 setSpinnerByValue(spinnerAgeValue, partes[0]);
-                setSpinnerByValue(spinnerAgeType, partes[1]);
+                // Ajusta aqui para usar "Ano(s)", "Mês(es)", "Dia(s)"
+                String tipoIdade = partes[1];
+                if (tipoIdade.contains("Ano")) tipoIdade = "Ano(s)";
+                else if (tipoIdade.contains("Mês")) tipoIdade = "Mês(es)";
+                else if (tipoIdade.contains("Dia")) tipoIdade = "Dia(s)";
+                setSpinnerByValue(spinnerAgeType, tipoIdade);
             }
         }
     }
@@ -206,13 +211,13 @@ public class EditarPetFragment extends Fragment {
         petAtual.setDescricao(descricao);
         petAtual.setUrlImagem(urlImagemFinal);
 
-        // Substituído getId() → getIdPet(), pois agora o ID no Firestore está salvo no campo 'idPet'
+        // Usa idPet como identificador do documento no Firestore
         firestore.collection("pets")
-                .document(petAtual.getIdPet()) // <-- Aqui foi o ajuste principal
+                .document(petAtual.getIdPet())
                 .set(petAtual)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(requireContext(), "Pet atualizado com sucesso!", Toast.LENGTH_SHORT).show();
-                    requireActivity().onBackPressed(); // volta para tela anterior
+                    requireActivity().onBackPressed();
                 })
                 .addOnFailureListener(e -> Toast.makeText(requireContext(), "Erro ao atualizar pet.", Toast.LENGTH_SHORT).show());
     }

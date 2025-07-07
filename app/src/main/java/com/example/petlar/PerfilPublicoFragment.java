@@ -1,6 +1,5 @@
 package com.example.petlar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -45,7 +45,7 @@ public class PerfilPublicoFragment extends Fragment {
 
         // Recupera o ID do publicador enviado por argumentos
         if (getArguments() != null) {
-            publicadorId = getArguments().getString("idPublicador");
+            publicadorId = getArguments().getString("uidUsuario");
         }
 
         if (publicadorId != null) {
@@ -53,10 +53,18 @@ public class PerfilPublicoFragment extends Fragment {
         }
 
         btnVerPetsDisponiveis.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), MeusPetsFragment.class);
-            intent.putExtra("idPublicador", publicadorId);
-            intent.putExtra("modoPublico", true);
-            startActivity(intent);
+            MeusPetsFragment fragment = new MeusPetsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("uidUsuario", publicadorId);
+            bundle.putBoolean("modoPublico", true);
+            fragment.setArguments(bundle);
+
+            FragmentTransaction transaction = requireActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction();
+            transaction.replace(R.id.fragment_container, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
     }
 
@@ -67,21 +75,30 @@ public class PerfilPublicoFragment extends Fragment {
                     if (documentSnapshot.exists()) {
                         String nome = documentSnapshot.getString("nome");
                         String bio = documentSnapshot.getString("bio");
-                        String urlImagem = documentSnapshot.getString("urlFoto");
+                        String urlImagem = documentSnapshot.getString("urlImagem");
 
-                        txtNomePublicador.setText(nome);
+                        txtNomePublicador.setText(nome != null ? nome : "Sem nome");
                         txtBioPublicador.setText(bio != null ? bio : "");
 
                         if (urlImagem != null && !urlImagem.isEmpty()) {
                             Glide.with(requireContext())
                                     .load(urlImagem)
-                                    .placeholder(R.drawable.ic_launcher_foreground)
+                                    .placeholder(R.drawable.img_perfil_default)
+                                    .error(R.drawable.img_perfil_default)
                                     .into(imgFotoPublicador);
+                        } else {
+                            imgFotoPublicador.setImageResource(R.drawable.img_perfil_default);
                         }
+                    } else {
+                        txtNomePublicador.setText("Usuário não encontrado");
+                        txtBioPublicador.setText("");
+                        imgFotoPublicador.setImageResource(R.drawable.img_perfil_default);
                     }
                 })
                 .addOnFailureListener(e -> {
-                    // Log ou mensagem de erro
+                    txtNomePublicador.setText("Erro ao carregar");
+                    txtBioPublicador.setText("");
+                    imgFotoPublicador.setImageResource(R.drawable.img_perfil_default);
                 });
     }
 }

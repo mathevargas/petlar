@@ -11,34 +11,50 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <!-- Imagem de Perfil (genérica por padrão) -->
-        <ImageView
-            android:id="@+id/imgFotoPerfilRegistro"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/img_perfil_default"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/borda_foto_perfil"
-            android:scaleType="centerCrop"
-            android:contentDescription="Foto de Perfil" />
-
-        <!-- Botão para escolher imagem (opcional) -->
-        <Button
-            android:id="@+id/btnSelecionarFoto"
-            android:layout_width="wrap_content"
+        <!-- Topo com imagem de perfil + botão (à esquerda) e arte decorativa (à direita) -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Selecionar Foto de Perfil"
-            android:layout_marginBottom="16dp" />
+            android:orientation="horizontal"
+            android:gravity="start"
+            android:layout_marginBottom="16dp">
 
-        <!-- Título -->
-        <TextView
-            android:id="@+id/txtTituloRegistro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Crie sua conta no PetLar 🐾"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp" />
+            <!-- Coluna esquerda com foto de perfil e botão -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Imagem de Perfil (genérica por padrão) -->
+                <ImageView
+                    android:id="@+id/imgFotoPerfilRegistro"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/img_perfil_default"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/borda_foto_perfil"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="Foto de Perfil" />
+
+                <!-- Botão para escolher imagem (opcional) -->
+                <Button
+                    android:id="@+id/btnSelecionarFoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Selecionar Foto"
+                    android:layout_marginBottom="8dp" />
+            </LinearLayout>
+
+            <!-- Imagem de título no topo direito -->
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="top|end"
+                android:layout_marginStart="16dp"
+                android:contentDescription="Imagem título"
+                android:src="@drawable/titulo_criar_conta" />
+        </LinearLayout>
 
         <!-- Nome -->
         <EditText
@@ -151,6 +167,5 @@
             android:textColor="@android:color/white"
             android:background="@drawable/botao_primario"
             android:layout_marginTop="8dp" />
-
     </LinearLayout>
 </ScrollView>

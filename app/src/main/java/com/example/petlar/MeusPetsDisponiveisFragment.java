@@ -57,11 +57,12 @@ public class MeusPetsDisponiveisFragment extends Fragment {
             uidUsuario = getArguments().getString("uidUsuario", "");
         }
 
+        // Se não for modo público, usa o usuário logado
         if (!modoPublico && (uidUsuario == null || uidUsuario.isEmpty())) {
             uidUsuario = FirebaseAuth.getInstance().getCurrentUser().getUid();
         }
 
-        // Inicializa o adapter com base no modo (público ou privado)
+        // Inicializa o adapter
         petAdapter = new PetAdapter(getContext(), listaPets, pet -> {
             DetalhesPetFragment detalhesFragment = new DetalhesPetFragment();
             Bundle bundle = new Bundle();
@@ -73,7 +74,7 @@ public class MeusPetsDisponiveisFragment extends Fragment {
                     .replace(R.id.fragment_container, detalhesFragment)
                     .addToBackStack(null)
                     .commit();
-        }, modoPublico); // <- passa o modo correto
+        });
 
         recyclerMeusPets.setAdapter(petAdapter);
 
@@ -83,21 +84,18 @@ public class MeusPetsDisponiveisFragment extends Fragment {
         return view;
     }
 
+    // Método para buscar pets do usuário logado (ou público) com campo adotado = false
     private void carregarPetsDoUsuario() {
         CollectionReference petsRef = FirebaseFirestore.getInstance().collection("pets");
 
-        // ❗️Ajustado: o campo correto é "idUsuario"
-        petsRef.whereEqualTo("idUsuario", uidUsuario)
+        petsRef.whereEqualTo("uidUsuario", uidUsuario)
                 .whereEqualTo("adotado", false)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     listaPets.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         Pet pet = doc.toObject(Pet.class);
-
-                        // ✅ Ajustado: usa o método correto para atribuir o ID do documento
-                        pet.setIdPet(doc.getId());
-
+                        pet.setIdPet(doc.getId()); // garante que o ID do documento esteja no objeto
                         listaPets.add(pet);
                     }
                     petAdapter.notifyDataSetChanged();

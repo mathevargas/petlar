@@ -45,7 +45,6 @@ public class PainelFiltroFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Infla o layout personalizado (painel_filtro.xml)
         View view = inflater.inflate(R.layout.painel_filtro, container, false);
 
         // Referencia os componentes do layout
@@ -53,10 +52,10 @@ public class PainelFiltroFragment extends BottomSheetDialogFragment {
         spinnerTipo = view.findViewById(R.id.spinnerTipo);
         spinnerPorte = view.findViewById(R.id.spinnerPorte);
         editCidade = view.findViewById(R.id.editCidade);
-        editRaca = view.findViewById(R.id.editRaca); // Novo campo de filtro por raça
+        editRaca = view.findViewById(R.id.editRaca);
 
-        configurarSpinners();   // Preenche os spinners
-        configurarEventos();    // Adiciona listeners para alterações
+        configurarSpinners();
+        configurarEventos();
 
         return view;
     }
@@ -65,17 +64,14 @@ public class PainelFiltroFragment extends BottomSheetDialogFragment {
      * Preenche os spinners com as opções de Estado, Tipo e Porte
      */
     private void configurarSpinners() {
-        // Lista de estados (UF)
         String[] estados = {"Todos", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES",
                 "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI",
                 "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"};
         spinnerEstado.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, estados));
 
-        // Lista de tipos de pet
         String[] tipos = {"Todos", "Cachorro", "Gato", "Outro"};
         spinnerTipo.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, tipos));
 
-        // Lista de portes
         String[] portes = {"Todos", "Pequeno", "Médio", "Grande"};
         spinnerPorte.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, portes));
     }
@@ -84,31 +80,27 @@ public class PainelFiltroFragment extends BottomSheetDialogFragment {
      * Configura os eventos de mudança em cada campo
      */
     private void configurarEventos() {
-        // Listener para os Spinners
         AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                notificarAlteracao(); // Quando algo for selecionado
+                notificarAlteracao();
             }
-
             @Override public void onNothingSelected(AdapterView<?> parent) {}
         };
 
-        // Aplica o listener nos spinners
         spinnerEstado.setOnItemSelectedListener(itemSelectedListener);
         spinnerTipo.setOnItemSelectedListener(itemSelectedListener);
         spinnerPorte.setOnItemSelectedListener(itemSelectedListener);
 
-        // Detecta mudança em cidade ou raça
         TextWatcher textWatcher = new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-                notificarAlteracao(); // Sempre que houver digitação
+                notificarAlteracao();
             }
             @Override public void afterTextChanged(Editable s) {}
         };
 
         editCidade.addTextChangedListener(textWatcher);
-        editRaca.addTextChangedListener(textWatcher); // Novo campo
+        editRaca.addTextChangedListener(textWatcher);
     }
 
     /**
@@ -120,9 +112,8 @@ public class PainelFiltroFragment extends BottomSheetDialogFragment {
             String tipo = spinnerTipo.getSelectedItem().toString();
             String porte = spinnerPorte.getSelectedItem().toString();
             String cidade = editCidade.getText().toString().trim();
-            String raca = editRaca.getText().toString().trim(); // Novo campo
+            String raca = editRaca.getText().toString().trim();
 
-            // Envia os filtros selecionados
             listener.onFiltroSelecionado(estado, cidade, tipo, porte, raca);
         }
     }

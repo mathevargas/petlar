@@ -25,7 +25,6 @@ public class MeusPetsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Infla o layout do fragmento (antes era uma activity)
         return inflater.inflate(R.layout.fragment_meus_pets, container, false);
     }
 

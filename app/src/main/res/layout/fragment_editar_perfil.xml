@@ -11,24 +11,23 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 
-        <!-- Arte do topo (igual à tela de perfil), alinhada à direita -->
-        <RelativeLayout
+        <!-- Cabeçalho com arte do topo (flutuante à direita) -->
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="-16dp">
 
             <ImageView
                 android:id="@+id/imgArteTopo"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
-                android:src="@drawable/titulo_meu_perfil"
                 android:adjustViewBounds="true"
-                android:contentDescription="Arte visual do perfil" />
-        </RelativeLayout>
+                android:contentDescription="Arte visual do perfil"
+                android:src="@drawable/titulo_meu_perfil" />
+        </FrameLayout>
 
         <!-- Foto de perfil -->
         <ImageView
@@ -60,7 +59,7 @@
             android:enabled="false"
             android:focusable="false"
             android:textColor="@android:color/darker_gray"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="10dp" />
 
         <!-- Nome -->
         <EditText
@@ -69,7 +68,7 @@
             android:layout_height="wrap_content"
             android:hint="Nome"
             android:inputType="textPersonName"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="10dp" />
 
         <!-- Bio -->
         <EditText
@@ -78,17 +77,17 @@
             android:layout_height="wrap_content"
             android:hint="Bio"
             android:inputType="textMultiLine"
-            android:minLines="3"
-            android:maxLines="5"
+            android:minLines="2"
+            android:maxLines="3"
             android:gravity="top"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="10dp" />
 
         <!-- WhatsApp com código do país (spinner + número) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="10dp">
 
             <Spinner
                 android:id="@+id/spinnerCountryCode"
@@ -113,14 +112,14 @@
             android:layout_height="wrap_content"
             android:hint="Cidade"
             android:inputType="textCapWords"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="10dp" />
 
         <!-- Estado (Spinner) -->
         <Spinner
             android:id="@+id/spinnerEstadoEditar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="16dp" />
 
         <!-- Nova senha (opcional) -->
         <EditText
@@ -129,7 +128,7 @@
             android:layout_height="wrap_content"
             android:hint="Nova senha (opcional)"
             android:inputType="textPassword"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="16dp" />
 
         <!-- Botão salvar -->
         <Button

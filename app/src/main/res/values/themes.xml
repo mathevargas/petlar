@@ -4,7 +4,7 @@
     <!-- Base Theme com Material 3 e cores personalizadas -->
     <style name="Base.Theme.PetLar" parent="Theme.Material3.DayNight.NoActionBar">
 
-        <!-- 🎨 Cores principais do PetLar -->
+        <!-- Cores principais do PetLar -->
         <item name="colorPrimary">@color/button_primary</item>
         <item name="colorPrimaryContainer">@color/button_primary_pressed</item>
         <item name="colorOnPrimary">@android:color/white</item>
@@ -13,14 +13,18 @@
         <item name="colorSecondaryContainer">@color/button_secondary_pressed</item>
         <item name="colorOnSecondary">@android:color/white</item>
 
-        <!-- 🎨 Cores de fundo e superfície -->
+        <!-- Cores de fundo e superfície -->
         <item name="android:colorBackground">@color/background_light</item> <!-- ✅ corrigido -->
         <item name="colorSurface">@color/background_light</item>
         <item name="colorOnSurface">@color/text_primary</item>
 
-        <!-- 🌙 Barra de status e navegação -->
+        <!-- Barra de status e navegação -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/button_primary</item>
         <item name="android:navigationBarColor">@color/nav_active</item>
+
+        <!-- Desativa splash automático do Android 12+ -->
+        <item name="android:windowSplashScreenAnimatedIcon">@null</item>
+        <item name="android:windowSplashScreenBackground">@android:color/transparent</item>
     </style>
 
     <!-- Tema usado no AndroidManifest -->

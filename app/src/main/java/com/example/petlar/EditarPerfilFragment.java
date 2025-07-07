@@ -107,28 +107,18 @@ public class EditarPerfilFragment extends Fragment {
                         edtEmail.setText(doc.getString("email"));
                         edtEmail.setEnabled(false);
 
-                        // Carrega número com DDI e ajusta spinner + campo número
+                        // Carrega WhatsApp: separa DDI e número local
                         String whatsapp = doc.getString("whatsapp");
                         if (whatsapp != null && whatsapp.startsWith("+")) {
-                            String numeroSemEspacos = whatsapp.replaceAll("\\s+", "");
-                            boolean encontrou = false;
-
                             for (int i = 0; i < spinnerCountryCode.getCount(); i++) {
-                                String item = spinnerCountryCode.getItemAtPosition(i).toString(); // ex: +55 (Brasil)
-                                String ddi = item.replaceAll("\\D+", ""); // extrai só os números
-
-                                if (numeroSemEspacos.startsWith("+" + ddi)) {
+                                String item = spinnerCountryCode.getItemAtPosition(i).toString(); // Ex: +55 (Brasil)
+                                String ddi = item.replaceAll("\\D+", ""); // Só números
+                                if (whatsapp.startsWith("+" + ddi)) {
                                     spinnerCountryCode.setSelection(i);
-                                    String numeroAposDDI = numeroSemEspacos.substring(("+" + ddi).length());
-                                    etWhatsApp.setText(numeroAposDDI); // só o número
-                                    encontrou = true;
+                                    String numero = whatsapp.substring(("+" + ddi).length()).trim();
+                                    etWhatsApp.setText(numero);
                                     break;
                                 }
-                            }
-
-                            // Se não encontrou, mostra número completo
-                            if (!encontrou) {
-                                etWhatsApp.setText(numeroSemEspacos.replaceAll("\\D+", ""));
                             }
                         }
 
@@ -139,8 +129,8 @@ public class EditarPerfilFragment extends Fragment {
                             if (pos >= 0) spinnerEstado.setSelection(pos);
                         }
 
-                        // Foto de perfil
-                        urlFotoPerfil = doc.getString("urlFotoPerfil");
+                        // Foto de perfil (campo correto: urlImagem)
+                        urlFotoPerfil = doc.getString("urlImagem");
                         if (urlFotoPerfil == null || urlFotoPerfil.equals("default")) {
                             imgFotoPerfil.setImageResource(R.drawable.img_perfil_default);
                         } else {
@@ -161,10 +151,11 @@ public class EditarPerfilFragment extends Fragment {
         atualizacoes.put("cidade", edtCidade.getText().toString().trim());
         atualizacoes.put("estado", spinnerEstado.getSelectedItem().toString());
 
-        // Formata WhatsApp (com DDI e somente números)
+        // Formata WhatsApp (com DDI e número local)
         String ddiSelecionado = spinnerCountryCode.getSelectedItem().toString();
         String ddi = ddiSelecionado.replaceAll("\\D+", "");
-        String whatsapp = "+" + ddi + etWhatsApp.getText().toString().replaceAll("\\D+", "");
+        String numero = etWhatsApp.getText().toString().trim().replaceAll("\\s+", " ");
+        String whatsapp = "+" + ddi + " " + numero;
         atualizacoes.put("whatsapp", whatsapp);
 
         // Se uma nova imagem foi selecionada, faz upload dela
@@ -173,13 +164,13 @@ public class EditarPerfilFragment extends Fragment {
                     .putFile(novaImagemSelecionada)
                     .addOnSuccessListener(task -> task.getStorage().getDownloadUrl()
                             .addOnSuccessListener(uri -> {
-                                atualizacoes.put("urlFotoPerfil", uri.toString());
+                                atualizacoes.put("urlImagem", uri.toString()); // nome correto do campo
                                 atualizarFirestore(atualizacoes);
                             }))
                     .addOnFailureListener(e -> Toast.makeText(getContext(), "Erro ao fazer upload da imagem", Toast.LENGTH_SHORT).show());
         } else {
             // Usa imagem existente
-            atualizacoes.put("urlFotoPerfil", urlFotoPerfil != null ? urlFotoPerfil : "default");
+            atualizacoes.put("urlImagem", urlFotoPerfil != null ? urlFotoPerfil : "default");
             atualizarFirestore(atualizacoes);
         }
 

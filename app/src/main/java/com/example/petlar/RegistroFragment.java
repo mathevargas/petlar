@@ -26,25 +26,20 @@ import java.util.Map;
 
 public class RegistroFragment extends Fragment {
 
-    // Componentes da interface
     private ImageView imgFotoPerfil;
     private Button btnSelecionarFoto, btnCriarConta;
     private EditText etNome, etEmail, etSenha, etConfirmarSenha;
     private EditText etNumero, etCidade, etBio;
     private Spinner spinnerEstado, spinnerCountryCode;
 
-    // Firebase
     private Uri imagemSelecionada = null;
     private FirebaseAuth auth;
     private FirebaseFirestore firestore;
     private FirebaseStorage storage;
 
-    // Launcher para selecionar imagem da galeria
     private ActivityResultLauncher<Intent> seletorImagemLauncher;
 
-    public RegistroFragment() {
-        // Construtor padrão obrigatório
-    }
+    public RegistroFragment() {}
 
     @Nullable
     @Override
@@ -65,7 +60,7 @@ public class RegistroFragment extends Fragment {
         spinnerCountryCode = view.findViewById(R.id.spinnerCountryCode);
         btnCriarConta = view.findViewById(R.id.btnAcao);
 
-        // Firebase
+        // Inicializa Firebase
         auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -82,7 +77,7 @@ public class RegistroFragment extends Fragment {
         adapterCodigos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCountryCode.setAdapter(adapterCodigos);
 
-        // Configura o seletor de imagem da galeria
+        // Configura seletor de imagem da galeria
         seletorImagemLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -92,20 +87,18 @@ public class RegistroFragment extends Fragment {
                     }
                 });
 
-        // Ação do botão de selecionar foto
         btnSelecionarFoto.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
             seletorImagemLauncher.launch(intent);
         });
 
-        // Ação do botão de criar conta
         btnCriarConta.setOnClickListener(v -> criarConta());
 
         return view;
     }
 
-    // Cria a conta com autenticação e salva os dados no Firestore
+    // Valida os campos e cria a conta
     private void criarConta() {
         String nome = etNome.getText().toString().trim();
         String email = etEmail.getText().toString().trim().toLowerCase();
@@ -118,7 +111,6 @@ public class RegistroFragment extends Fragment {
         String estado = spinnerEstado.getSelectedItem().toString();
         String bio = etBio.getText().toString().trim();
 
-        // Validações básicas
         if (TextUtils.isEmpty(nome) || TextUtils.isEmpty(email) || TextUtils.isEmpty(senha)) {
             Toast.makeText(getContext(), "Preencha todos os campos obrigatórios", Toast.LENGTH_SHORT).show();
             return;
@@ -129,13 +121,12 @@ public class RegistroFragment extends Fragment {
             return;
         }
 
-        // Cria o usuário no Firebase Authentication
         auth.createUserWithEmailAndPassword(email, senha)
                 .addOnSuccessListener(authResult -> {
                     String userId = auth.getCurrentUser().getUid();
 
                     if (imagemSelecionada != null) {
-                        // Se houver imagem, envia para o Storage
+                        // Envia a imagem selecionada para o Firebase Storage
                         storage.getReference().child("usuarios/" + userId + "/foto_perfil.jpg")
                                 .putFile(imagemSelecionada)
                                 .addOnSuccessListener(taskSnapshot ->
@@ -143,7 +134,7 @@ public class RegistroFragment extends Fragment {
                                             salvarDadosUsuario(userId, nome, email, uri.toString(), whatsapp, cidade, estado, bio);
                                         }));
                     } else {
-                        // Usa imagem padrão
+                        // Usa imagem padrão se nenhuma imagem for selecionada
                         salvarDadosUsuario(userId, nome, email, "default", whatsapp, cidade, estado, bio);
                     }
                 })
@@ -154,13 +145,15 @@ public class RegistroFragment extends Fragment {
     // Salva os dados do novo usuário no Firestore
     private void salvarDadosUsuario(String uid, String nome, String email, String urlFoto, String whatsapp, String cidade, String estado, String bio) {
         Map<String, Object> dadosUsuario = new HashMap<>();
+        dadosUsuario.put("uid", uid); // ID do usuário para vincular pets
         dadosUsuario.put("nome", nome);
         dadosUsuario.put("email", email);
-        dadosUsuario.put("urlFotoPerfil", urlFoto);
+        dadosUsuario.put("urlImagem", urlFoto);
         dadosUsuario.put("whatsapp", whatsapp);
         dadosUsuario.put("cidade", cidade);
         dadosUsuario.put("estado", estado);
         dadosUsuario.put("bio", bio);
+        dadosUsuario.put("criadoEm", com.google.firebase.Timestamp.now());
         dadosUsuario.put("isPremium", false);
 
         firestore.collection("usuarios").document(uid).set(dadosUsuario)

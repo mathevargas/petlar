@@ -11,16 +11,16 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo_petlar"
+        android:roundIcon="@mipmap/logo_petlar"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PetLar"
         tools:targetApi="31">
 
-        <!-- Tela principal com BottomNavigationView -->
+        <!-- Tela de abertura personalizada com imagem -->
         <activity
-            android:name=".MainActivity"
+            android:name=".TelaAberturaActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,11 +28,10 @@
             </intent-filter>
         </activity>
 
-        <!-- Tela para editar PET (ainda é uma Activity) -->
-        <activity android:name=".EditarPetFragment" />
+        <!-- Tela principal com BottomNavigationView -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
 
-        <!-- Tela para visualizar os próprios pets com abas -->
-        <activity android:name=".MeusPetsFragment" />
     </application>
-
 </manifest>

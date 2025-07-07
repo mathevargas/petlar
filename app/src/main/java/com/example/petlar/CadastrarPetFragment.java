@@ -49,6 +49,7 @@ public class CadastrarPetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cadastrar_pet, container, false);
 
+        // Inicializa os campos do layout
         etNome = view.findViewById(R.id.etPetName);
         spinnerAgeValue = view.findViewById(R.id.spinnerAgeValue);
         spinnerAgeType = view.findViewById(R.id.spinnerAgeType);
@@ -70,8 +71,10 @@ public class CadastrarPetFragment extends Fragment {
         storageReference = FirebaseStorage.getInstance().getReference();
         auth = FirebaseAuth.getInstance();
 
+        // Botão para abrir a galeria de imagens
         btnSelecionarImagem.setOnClickListener(v -> abrirGaleria());
 
+        // Força o e-mail para letras minúsculas
         etEmail.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
@@ -84,16 +87,19 @@ public class CadastrarPetFragment extends Fragment {
             }
         });
 
+        // Botão para salvar o pet
         btnSalvarPet.setOnClickListener(v -> salvarPetNoFirebase());
 
         return view;
     }
 
+    // Abre a galeria do dispositivo para selecionar imagem
     private void abrirGaleria() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_CODE_IMAGEM);
     }
 
+    // Resultado da seleção da imagem
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -109,9 +115,10 @@ public class CadastrarPetFragment extends Fragment {
         }
     }
 
+    // Valida campos e inicia upload da imagem, se necessário
     private void salvarPetNoFirebase() {
         String nome = etNome.getText().toString().trim();
-        String idade = spinnerAgeValue.getSelectedItem().toString() + " " + spinnerAgeType.getSelectedItem().toString();
+        String idade = spinnerAgeValue.getSelectedItem().toString() + " " + spinnerAgeType.getSelectedItem().toString(); // usa "Ano(s)", etc.
         String genero = spinnerGenero.getSelectedItem().toString();
         String raca = etRaca.getText().toString().trim();
         String cidade = etCidade.getText().toString().trim();
@@ -124,8 +131,9 @@ public class CadastrarPetFragment extends Fragment {
         String tipo = spinnerTipo.getSelectedItem().toString();
         String porte = spinnerPorte.getSelectedItem().toString();
 
-        if (TextUtils.isEmpty(nome) || TextUtils.isEmpty(raca) || TextUtils.isEmpty(cidade)
-                || TextUtils.isEmpty(whatsapp) || TextUtils.isEmpty(email) || TextUtils.isEmpty(descricao)) {
+        // Verifica se os campos obrigatórios foram preenchidos
+        if (TextUtils.isEmpty(nome) || TextUtils.isEmpty(cidade)
+                || TextUtils.isEmpty(whatsapp) || TextUtils.isEmpty(email)) {
             Toast.makeText(getContext(), "Preencha todos os campos obrigatórios", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -134,9 +142,10 @@ public class CadastrarPetFragment extends Fragment {
 
         if (imagemSelecionadaUri == null) {
             // Salva pet com imagem padrão
-            salvarPetComImagem("https://firebasestorage.googleapis.com/v0/b/SEU_PROJETO.appspot.com/o/ic_pet_dog_cat.png?alt=media", nome, idade, genero, raca, cidade, estado, whatsapp, email, descricao, tipo, porte, idUsuario);
+            salvarPetComImagem("https://firebasestorage.googleapis.com/v0/b/SEU_PROJETO.appspot.com/o/ic_pet_dog_cat.png?alt=media",
+                    nome, idade, genero, raca, cidade, estado, whatsapp, email, descricao, tipo, porte, idUsuario);
         } else {
-            // Faz upload da imagem e obtém URL
+            // Faz upload da imagem
             String nomeImagem = UUID.randomUUID().toString();
             StorageReference imagemRef = storageReference.child("pets/" + nomeImagem);
 
@@ -146,7 +155,8 @@ public class CadastrarPetFragment extends Fragment {
                     }))
                     .addOnFailureListener(e -> {
                         Toast.makeText(getContext(), "Erro ao fazer upload da imagem", Toast.LENGTH_SHORT).show();
-                        salvarPetComImagem("https://firebasestorage.googleapis.com/v0/b/SEU_PROJETO.appspot.com/o/ic_pet_dog_cat.png?alt=media", nome, idade, genero, raca, cidade, estado, whatsapp, email, descricao, tipo, porte, idUsuario);
+                        salvarPetComImagem("https://firebasestorage.googleapis.com/v0/b/SEU_PROJETO.appspot.com/o/ic_pet_dog_cat.png?alt=media",
+                                nome, idade, genero, raca, cidade, estado, whatsapp, email, descricao, tipo, porte, idUsuario);
                     });
         }
     }
@@ -157,10 +167,10 @@ public class CadastrarPetFragment extends Fragment {
                                     String descricao, String tipo, String porte, String idUsuario) {
 
         // Cria referência com ID gerado automaticamente
-        String idPet = firestore.collection("pets").document().getId(); // ← novo ID gerado para o campo "idPet"
+        String idPet = firestore.collection("pets").document().getId();
 
         Map<String, Object> pet = new HashMap<>();
-        pet.put("idPet", idPet); // ← campo adicional usado para consistência em outras partes do app
+        pet.put("idPet", idPet); // ← campo usado em várias telas
         pet.put("nome", nome);
         pet.put("idade", idade);
         pet.put("genero", genero);
@@ -172,10 +182,10 @@ public class CadastrarPetFragment extends Fragment {
         pet.put("descricao", descricao);
         pet.put("tipo", tipo);
         pet.put("porte", porte);
-        pet.put("urlImagem", imagemUrl); // ← campo renomeado para corresponder à classe Pet
-        pet.put("adotado", false);
-        pet.put("uidUsuario", idUsuario); // ← renomeado para uidUsuario conforme estrutura do banco
-        pet.put("criadoEm", com.google.firebase.Timestamp.now()); // ← campo extra (timestamp)
+        pet.put("urlImagem", imagemUrl);
+        pet.put("adotado", false); // ← fundamental para filtros e botão "Já foi adotado"
+        pet.put("uidUsuario", idUsuario); // ← vínculo com o dono
+        pet.put("criadoEm", com.google.firebase.Timestamp.now());
 
         firestore.collection("pets").document(idPet).set(pet)
                 .addOnSuccessListener(documentReference -> {
@@ -186,6 +196,7 @@ public class CadastrarPetFragment extends Fragment {
                 .addOnFailureListener(e -> Toast.makeText(getContext(), "Erro ao salvar pet", Toast.LENGTH_SHORT).show());
     }
 
+    // Limpa os campos após o cadastro
     private void limparCampos() {
         etNome.setText("");
         etRaca.setText("");
@@ -197,8 +208,9 @@ public class CadastrarPetFragment extends Fragment {
         imagemSelecionadaUri = null;
     }
 
+    // Redireciona para a tela inicial após o cadastro
     private void redirecionarParaInicio() {
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, new InicioFragment()).commit();
+        transaction.replace(R.id.fragment_container, new InicioFragment()).addToBackStack(null).commit();
     }
 }

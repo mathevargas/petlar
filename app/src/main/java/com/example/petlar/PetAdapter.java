@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
@@ -53,7 +55,6 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
     @NonNull
     @Override
     public PetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Infla o layout de cada item da lista
         View view = LayoutInflater.from(context).inflate(R.layout.item_pet, parent, false);
         return new PetViewHolder(view);
     }
@@ -89,56 +90,54 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
             }
         });
 
-        // Verifica se o usuário logado é o dono do pet
-        String uidAtual = FirebaseAuth.getInstance().getCurrentUser() != null ?
-                FirebaseAuth.getInstance().getCurrentUser().getUid() : "";
+        // Verifica se o usuário está logado
+        FirebaseUser usuarioAtual = FirebaseAuth.getInstance().getCurrentUser();
+        String uidAtual = (usuarioAtual != null) ? usuarioAtual.getUid() : "";
 
-        // Se for modo público ou outro usuário, esconde os botões de controle
-        if (modoPublico || !uidAtual.equals(pet.getUidUsuario())) {
-            holder.btnMarcarAdotado.setVisibility(View.GONE);
-            holder.btnEditar.setVisibility(View.GONE);
-            holder.btnExcluir.setVisibility(View.GONE);
-            return;
+        boolean ehDono = usuarioAtual != null && uidAtual.equals(pet.getUidUsuario());
+
+        // Oculta todos os botões se for modo público, usuário deslogado ou não for dono
+        if (modoPublico || !ehDono) {
+            holder.layoutBotoes.setVisibility(View.GONE);
+        } else {
+            holder.layoutBotoes.setVisibility(View.VISIBLE);
+            holder.btnMarcarAdotado.setVisibility(pet.isAdotado() ? View.GONE : View.VISIBLE);
+            holder.btnEditar.setVisibility(View.VISIBLE);
+            holder.btnExcluir.setVisibility(View.VISIBLE);
         }
-
-        // Mostra os botões apenas se for o dono do pet
-        holder.btnMarcarAdotado.setVisibility(View.VISIBLE);
-        holder.btnEditar.setVisibility(View.VISIBLE);
-        holder.btnExcluir.setVisibility(View.VISIBLE);
 
         // Botão "Marcar como adotado"
         holder.btnMarcarAdotado.setOnClickListener(v -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            String uid = uidAtual; // Necessário para uso dentro da lambda
 
-            // Atualiza o campo "adotado" no documento com o ID correto (idPet)
             db.collection("pets")
-                    .document(pet.getIdPet()) // substituído setId → setIdPet
+                    .document(pet.getIdPet())
                     .update("adotado", true)
                     .addOnSuccessListener(unused -> {
-                        // Cria o objeto de adoção
                         Adocao adocao = new Adocao(
                                 pet.getIdPet(),
-                                uid,
+                                uidAtual,
                                 Timestamp.now(),
                                 "Adotado via app"
                         );
 
-                        // Registra na coleção "adotados"
                         db.collection("adotados")
                                 .add(adocao)
                                 .addOnSuccessListener(ref -> {
-                                    // Remove da lista local e atualiza a RecyclerView
-                                    listaPets.remove(position);
-                                    notifyItemRemoved(position);
+                                    int adapterPosition = holder.getAdapterPosition();
+                                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                                        listaPets.remove(adapterPosition);
+                                        notifyItemRemoved(adapterPosition);
+                                    }
                                     Toast.makeText(context, "Pet marcado como adotado!", Toast.LENGTH_SHORT).show();
                                 })
                                 .addOnFailureListener(e -> {
                                     Toast.makeText(context, "Pet adotado, mas falha ao registrar adoção", Toast.LENGTH_LONG).show();
                                 });
                     })
-                    .addOnFailureListener(e ->
-                            Toast.makeText(context, "Erro ao marcar como adotado", Toast.LENGTH_SHORT).show());
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(context, "Erro ao marcar como adotado", Toast.LENGTH_SHORT).show();
+                    });
         });
 
         // Botão "Excluir pet"
@@ -148,15 +147,19 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
                     .setMessage("Tem certeza que deseja excluir este pet?")
                     .setPositiveButton("Sim", (dialog, which) -> {
                         FirebaseFirestore.getInstance().collection("pets")
-                                .document(pet.getIdPet()) // substituído getId() por getIdPet()
+                                .document(pet.getIdPet())
                                 .delete()
                                 .addOnSuccessListener(unused -> {
-                                    listaPets.remove(position);
-                                    notifyItemRemoved(position);
+                                    int adapterPosition = holder.getAdapterPosition();
+                                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                                        listaPets.remove(adapterPosition);
+                                        notifyItemRemoved(adapterPosition);
+                                    }
                                     Toast.makeText(context, "Pet excluído com sucesso", Toast.LENGTH_SHORT).show();
                                 })
-                                .addOnFailureListener(e ->
-                                        Toast.makeText(context, "Erro ao excluir pet", Toast.LENGTH_SHORT).show());
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(context, "Erro ao excluir pet", Toast.LENGTH_SHORT).show();
+                                });
                     })
                     .setNegativeButton("Cancelar", null)
                     .show();
@@ -164,7 +167,6 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
 
         // Botão "Editar pet"
         holder.btnEditar.setOnClickListener(v -> {
-            // Substitui o uso de Intent por navegação via Fragment
             EditarPetFragment editarFragment = new EditarPetFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable("pet", pet);
@@ -190,6 +192,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
         TextView txtNome, txtIdade, txtTipo, txtPorte, txtCidadeEstado;
         ImageView imgPet;
         Button btnMarcarAdotado, btnEditar, btnExcluir;
+        LinearLayout layoutBotoes;
 
         public PetViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -202,6 +205,7 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
             btnMarcarAdotado = itemView.findViewById(R.id.btnMarcarAdotado);
             btnEditar = itemView.findViewById(R.id.btnEditarPet);
             btnExcluir = itemView.findViewById(R.id.btnExcluirPet);
+            layoutBotoes = itemView.findViewById(R.id.layoutBotoes);
         }
     }
 }

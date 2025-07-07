@@ -11,8 +11,6 @@
         android:padding="16dp"
         android:gravity="center_horizontal">
 
-        <!-- Arte ou título -->
-
         <!-- Foto do publicador -->
         <ImageView
             android:id="@+id/imgFotoPublicador"

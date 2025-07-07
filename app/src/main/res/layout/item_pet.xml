@@ -23,63 +23,74 @@
             android:scaleType="centerCrop"
             android:contentDescription="Imagem do Pet" />
 
-        <!-- Coluna com os dados e botões -->
+        <!-- Coluna principal com textos e botões -->
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
+            android:orientation="horizontal"
+            android:gravity="top">
 
-            <!-- Nome -->
-            <TextView
-                android:id="@+id/txtNomePet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nome"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@color/text_primary" />
-
-            <!-- Idade -->
-            <TextView
-                android:id="@+id/txtIdadePet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Idade"
-                android:textColor="@color/text_primary" />
-
-            <!-- Tipo -->
-            <TextView
-                android:id="@+id/txtTipoPet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tipo"
-                android:textColor="@color/text_primary" />
-
-            <!-- Porte -->
-            <TextView
-                android:id="@+id/txtPortePet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Porte"
-                android:textColor="@color/text_primary" />
-
-            <!-- Cidade - Estado -->
-            <TextView
-                android:id="@+id/txtCidadeEstado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cidade - Estado"
-                android:textColor="@color/text_primary" />
-
-            <!-- Botões visíveis apenas para o dono do pet -->
+            <!-- Coluna com os dados -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:gravity="end">
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="start">
+
+                <!-- Nome -->
+                <TextView
+                    android:id="@+id/txtNomePet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nome"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/text_primary" />
+
+                <!-- Idade -->
+                <TextView
+                    android:id="@+id/txtIdadePet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Idade"
+                    android:textColor="@color/text_primary" />
+
+                <!-- Tipo -->
+                <TextView
+                    android:id="@+id/txtTipoPet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tipo"
+                    android:textColor="@color/text_primary" />
+
+                <!-- Porte -->
+                <TextView
+                    android:id="@+id/txtPortePet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Porte"
+                    android:textColor="@color/text_primary" />
+
+                <!-- Cidade - Estado -->
+                <TextView
+                    android:id="@+id/txtCidadeEstado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cidade - Estado"
+                    android:textColor="@color/text_primary" />
+            </LinearLayout>
+
+            <!-- Coluna com os botões -->
+            <LinearLayout
+                android:id="@+id/layoutBotoes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="end"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp">
 
                 <!-- Marcar como adotado -->
                 <Button
@@ -87,10 +98,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Adotado"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="4dp"
                     android:backgroundTint="@color/petlar_green"
                     android:textColor="@android:color/white"
-                    android:visibility="gone" />
+                    android:minWidth="90dp" />
 
                 <!-- Editar pet -->
                 <Button
@@ -98,10 +109,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Editar"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="4dp"
                     android:backgroundTint="@color/petlar_blue"
                     android:textColor="@android:color/white"
-                    android:visibility="gone" />
+                    android:minWidth="90dp" />
 
                 <!-- Excluir pet -->
                 <Button
@@ -109,9 +120,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Excluir"
-                    android:backgroundTint="@color/orange_500"
+                    android:backgroundTint="@color/red_500"
                     android:textColor="@android:color/white"
-                    android:visibility="gone" />
+                    android:minWidth="90dp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

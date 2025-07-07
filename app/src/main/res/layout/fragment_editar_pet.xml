@@ -104,6 +104,7 @@
                     android:layout_height="wrap_content"
                     android:entries="@array/age_values" />
 
+                <!-- Substituído para usar a lista com plural -->
                 <Spinner
                     android:id="@+id/spinnerAgeType"
                     android:layout_width="0dp"

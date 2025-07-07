@@ -6,18 +6,16 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <!-- TÍTULO DA PÁGINA -->
-    <TextView
-        android:id="@+id/tituloMeusPets"
+    <!-- IMAGEM DE TÍTULO DA PÁGINA -->
+    <ImageView
+        android:id="@+id/imgTituloMeusPets"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="🐾 Meus Pets"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textColor="@color/petlar_primary"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp" />
+        android:layout_height="150dp"
+        android:src="@drawable/titulo_meus_pets"
+        android:scaleType="fitCenter"
+        android:contentDescription="Título Meus Pets"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp" />
 
     <!-- BottomNavigationView no topo, abaixo do título -->
     <com.google.android.material.bottomnavigation.BottomNavigationView

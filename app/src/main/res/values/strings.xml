@@ -24,11 +24,11 @@
         <item>Fêmea</item>
     </string-array>
 
-    <!-- Tipos de idade -->
+    <!-- Tipos de idade (ajustado para plural com sufixo (s)) -->
     <string-array name="age_type">
-        <item>Dias</item>
-        <item>Mês</item>
-        <item>Ano</item>
+        <item>Dia(s)</item>
+        <item>Mês(es)</item>
+        <item>Ano(s)</item>
     </string-array>
 
     <!-- Valores de idade -->

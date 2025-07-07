@@ -87,42 +87,6 @@
                 android:background="@drawable/botao_primario"
                 android:textColor="@android:color/white" />
 
-            <!-- Botão: Alterar Tema -->
-            <Button
-                android:id="@+id/btnTema"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Alterar Tema"
-                android:layout_marginBottom="8dp" />
-
-            <!-- Layout: Botões de Tema (inicialmente escondido) -->
-            <LinearLayout
-                android:id="@+id/layoutTemas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/btnTemaClaro"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Modo Claro" />
-
-                <Button
-                    android:id="@+id/btnTemaEscuro"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Modo Escuro" />
-
-                <Button
-                    android:id="@+id/btnTemaSistema"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Igual ao Sistema" />
-            </LinearLayout>
-
             <!-- Botão: Sair da Conta -->
             <Button
                 android:id="@+id/btnSair"

@@ -13,7 +13,6 @@
         android:gravity="center_horizontal">
 
         <!-- Imagem do pet -->
-        <!-- Agora possui imagem padrão para exibir caso Glide falhe ou a URL esteja vazia -->
         <ImageView
             android:id="@+id/imgDetalhePet"
             android:layout_width="250dp"
@@ -59,21 +58,23 @@
         <!-- Descrição do pet -->
         <TextView
             android:id="@+id/txtDescricao"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Descrição do pet..."
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal"
+            android:textAlignment="center" />
 
-        <!-- Nome do publicador (aparece apenas se estiver logado) -->
+        <!-- Nome do publicador (visível apenas se carregar com sucesso no Java) -->
         <TextView
             android:id="@+id/txtPublicador"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Publicado por: Fulano"
+            android:text=""
             android:textStyle="italic"
             android:textColor="@android:color/darker_gray"
             android:layout_marginBottom="8dp"
-            android:visibility="gone" />
+            android:visibility="invisible" />
 
         <!-- Botões de contato (WhatsApp e E-mail) -->
         <LinearLayout
